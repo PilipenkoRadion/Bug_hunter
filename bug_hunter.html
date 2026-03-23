@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bug Hunter</title>
+    <title>Fehler-Jäger Akademie - Technischer Stack</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -100,12 +100,22 @@
             height: 100vh;
             background: white;
             box-shadow: var(--shadow-lg);
-            transform: translateX(0);
+            transform: translateX(-100%);
             transition: transform 0.3s ease;
             z-index: 200;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+        }
+
+        @media (min-width: 1025px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
         }
 
         .sidebar-header {
@@ -231,12 +241,22 @@
             margin-bottom: 2.5rem;
         }
 
+        /* === MOBILE FIX: Table wrapper for horizontal scroll === */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 2.5rem;
+            border-radius: 8px;
+            /* subtle scroll hint on mobile */
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 2.5rem;
             overflow: hidden;
             border-radius: 8px;
+            min-width: 420px;
         }
 
         thead {
@@ -260,6 +280,8 @@
             font-size: 0.95rem;
             vertical-align: top;
             line-height: 1.6;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         tbody tr {
@@ -274,7 +296,7 @@
         td:first-child {
             font-weight: 700;
             color: var(--primary);
-            min-width: 140px;
+            min-width: 110px;
         }
 
         .tag {
@@ -397,7 +419,10 @@
             color: #e5e7eb;
             margin: 1.5rem 0;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             border-radius: 8px;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .diagram-line {
@@ -460,8 +485,12 @@
             font-family: 'Courier New', monospace;
             font-size: 0.8rem;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             line-height: 1.6;
             border-left: 4px solid #10b981;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         .endpoint {
@@ -473,6 +502,9 @@
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
             transition: all 0.2s;
+            overflow: hidden;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .endpoint:hover {
@@ -500,6 +532,10 @@
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
             color: var(--primary);
+            word-break: break-all;
+            white-space: normal;
+            display: inline-block;
+            max-width: 100%;
         }
 
         .tech-info {
@@ -583,16 +619,28 @@
                 margin-bottom: 1.5rem;
             }
 
-            table {
-                font-size: 0.8rem;
+            .table-wrapper {
+                margin-bottom: 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
             }
 
-            th, td {
-                padding: 0.75rem 0.5rem;
+            table {
+                font-size: 0.8rem;
+                min-width: 360px;
+            }
+
+            th,
+            td {
+                padding: 0.6rem 0.5rem;
             }
 
             th {
                 font-size: 0.7rem;
+            }
+
+            td:first-child {
+                min-width: 90px;
             }
 
             .tag {
@@ -611,7 +659,8 @@
                 font-size: 1rem;
             }
 
-            .diagram, .code-example {
+            .diagram,
+            .code-example {
                 font-size: 0.75rem;
                 padding: 1rem;
                 margin: 1rem 0;
@@ -698,12 +747,18 @@
                 padding: 0.75rem;
             }
 
-            table {
-                font-size: 0.7rem;
+            .table-wrapper {
+                margin-bottom: 1rem;
             }
 
-            th, td {
-                padding: 0.5rem 0.35rem;
+            table {
+                font-size: 0.68rem;
+                min-width: 320px;
+            }
+
+            th,
+            td {
+                padding: 0.4rem 0.3rem;
             }
 
             .section-title {
@@ -743,6 +798,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -826,8 +882,8 @@
     <main>
         <div class="container">
             <h1>
-                <i></i>
-                🐜 Bug Hunter
+                <i class="fas fa-bug"></i>
+                FEHLER-JÄGER AKADEMIE
             </h1>
             <p class="subtitle">Interaktive Lernplattform für Programmierung — Technischer Stack</p>
 
@@ -837,21 +893,25 @@
                     Projektübersicht
                 </h2>
                 <p style="margin-bottom: 1rem;">
-                    <strong>Fehler-Jäger Akademie</strong> ist eine Bildungsplattform, die Benutzer zum Programmierenlernen durch interaktive Spiele hilft. 
+                    <strong>Fehler-Jäger Akademie</strong> ist eine Bildungsplattform, die Benutzer zum
+                    Programmierenlernen durch interaktive Spiele hilft.
                     Zwei verschiedene Editionen konzentrieren sich auf unterschiedliche Programmiereraspekte:
                 </p>
                 <div class="tech-info">
                     <p>
                         <i class="fab fa-python"></i>
-                        <strong>Python Edition:</strong> Debugging-Praxis — Fehler finden, toten Code entfernen, Logik wiederherstellen
+                        <strong>Python Edition:</strong> Debugging-Praxis — Fehler finden, toten Code entfernen, Logik
+                        wiederherstellen
                     </p>
                     <p>
                         <i class="fab fa-css3"></i>
-                        <strong>CSS Edition:</strong> Interaktives CSS-Lernen — Positionierung, Transformationen, Effekte
+                        <strong>CSS Edition:</strong> Interaktives CSS-Lernen — Positionierung, Transformationen,
+                        Effekte
                     </p>
                     <p>
                         <i class="fas fa-clock"></i>
-                        <strong>Zwei Modi:</strong> Timer-Modus (schnell) mit Rangliste oder Casual-Modus (stressfreies Lernen)
+                        <strong>Zwei Modi:</strong> Timer-Modus (schnell) mit Rangliste oder Casual-Modus (stressfreies
+                        Lernen)
                     </p>
                 </div>
             </div>
@@ -861,88 +921,93 @@
                     <i class="fab fa-react"></i>
                     Frontend (React 18 + CSS)
                 </h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Technologie</th>
-                            <th>Zweck</th>
-                            <th>Besonderheiten</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="tag react"><i class="fab fa-react"></i>React 18</span></td>
-                            <td>UI-Framework</td>
-                            <td>Hooks (useState, useEffect, useRef), funktionale Komponenten, State-Management</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tag javascript"><i class="fab fa-js"></i>Babel</span></td>
-                            <td>JSX-Transpiler</td>
-                            <td>JSX-zu-JavaScript-Transformation direkt im Browser</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tag css"><i class="fab fa-css3"></i>CSS</span></td>
-                            <td>Styling</td>
-                            <td>Benutzerdefinierte CSS-Variablen, Responsive Design, animierte Übergänge</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tag javascript"><i class="fab fa-js"></i>JavaScript</span></td>
-                            <td>Interaktivität</td>
-                            <td>Fetch API für HTTP-Anfragen, Timer-Management, Antwort-Validierung</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tag html"><i class="fab fa-html5"></i>HTML5</span></td>
-                            <td>Visuelle Rückmeldung</td>
-                            <td>Animationen, Partikeleffekte und Erfolgsvisualisierungen</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Technologie</th>
+                                <th>Zweck</th>
+                                <th>Besonderheiten</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="tag react"><i class="fab fa-react"></i>React 18</span></td>
+                                <td>UI-Framework</td>
+                                <td>Hooks (useState, useEffect, useRef), funktionale Komponenten, State-Management</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag javascript"><i class="fab fa-js"></i>Babel</span></td>
+                                <td>JSX-Transpiler</td>
+                                <td>JSX-zu-JavaScript-Transformation direkt im Browser</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag css"><i class="fab fa-css3"></i>CSS</span></td>
+                                <td>Styling</td>
+                                <td>Benutzerdefinierte CSS-Variablen, Responsive Design, animierte Übergänge</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag javascript"><i class="fab fa-js"></i>JavaScript</span></td>
+                                <td>Interaktivität</td>
+                                <td>Fetch API für HTTP-Anfragen, Timer-Management, Antwort-Validierung</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag html"><i class="fas fa-sparkles"></i>Effekte</span></td>
+                                <td>Visuelle Rückmeldung</td>
+                                <td>Animationen, Partikeleffekte und Erfolgsvisualisierungen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <h3 style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
+                <h3
+                    style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
                     <i class="fas fa-cubes"></i>
                     React-Komponenten:
                 </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Komponente</th>
-                            <th>Funktion</th>
-                            <th>State</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>NameModeScreen</strong></td>
-                            <td>Spiel- und Moduswahl (Timer/Casual)</td>
-                            <td>name, mode, game (python | css)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>PythonGame</strong></td>
-                            <td>Python Edition mit 10 Levels</td>
-                            <td>currentLevel, score, gameState, timeLeft, showHint</td>
-                        </tr>
-                        <tr>
-                            <td><strong>CssGame</strong></td>
-                            <td>CSS Edition mit interaktiver Demo-Box</td>
-                            <td>currentLevel, score, userAnswer, feedback, timeLeft</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Leaderboard</strong></td>
-                            <td>Rangliste mit Spielfilterung</td>
-                            <td>scores (aus API), filter (all | python | css)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>StatsOverlay</strong></td>
-                            <td>Endstatistik (5 Sekunden)</td>
-                            <td>stats, rank, countdown, onClose</td>
-                        </tr>
-                        <tr>
-                            <td><strong>TimerRing</strong></td>
-                            <td>Visueller Timer mit Fortschritt</td>
-                            <td>seconds, maxSeconds, Farbübergänge</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Komponente</th>
+                                <th>Funktion</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>NameModeScreen</strong></td>
+                                <td>Spiel- und Moduswahl (Timer/Casual)</td>
+                                <td>name, mode, game (python | css)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PythonGame</strong></td>
+                                <td>Python Edition mit 10 Levels</td>
+                                <td>currentLevel, score, gameState, timeLeft, showHint</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CssGame</strong></td>
+                                <td>CSS Edition mit interaktiver Demo-Box</td>
+                                <td>currentLevel, score, userAnswer, feedback, timeLeft</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Leaderboard</strong></td>
+                                <td>Rangliste mit Spielfilterung</td>
+                                <td>scores (aus API), filter (all | python | css)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>StatsOverlay</strong></td>
+                                <td>Endstatistik (5 Sekunden)</td>
+                                <td>stats, rank, countdown, onClose</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TimerRing</strong></td>
+                                <td>Visueller Timer mit Fortschritt</td>
+                                <td>seconds, maxSeconds, Farbübergänge</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="section" id="backend">
@@ -950,54 +1015,55 @@
                     <i class="fab fa-python"></i>
                     Backend (Flask + Python)
                 </h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Komponente</th>
-                            <th>Technologie</th>
-                            <th>Funktion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="tag flask"><i class="fas fa-flask"></i>Flask</span></td>
-                            <td>Web-Framework</td>
-                            <td>Erstellung von REST API und Servierung statischer Dateien</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tag cors"><i class="fas fa-shield-alt"></i>CORS</span></td>
-                            <td>Sicherheit</td>
-                            <td>CORS-Richtlinie für Cross-Domain-Anfragen vom Frontend</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tag python"><i class="fab fa-python"></i>JSON Storage</span></td>
-                            <td>Persistente Speicherung</td>
-                            <td>Ergebnisse in scores.json speichern</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tag python"><i class="fab fa-python"></i>Python 3.8+</span></td>
-                            <td>Runtime</td>
-                            <td>Hauptprogrammiersprache des Servers</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Komponente</th>
+                                <th>Technologie</th>
+                                <th>Funktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="tag flask"><i class="fas fa-flask"></i>Flask</span></td>
+                                <td>Web-Framework</td>
+                                <td>Erstellung von REST API und Servierung statischer Dateien</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag cors"><i class="fas fa-shield-alt"></i>CORS</span></td>
+                                <td>Sicherheit</td>
+                                <td>CORS-Richtlinie für Cross-Domain-Anfragen vom Frontend</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag python"><i class="fab fa-python"></i>JSON Storage</span></td>
+                                <td>Persistente Speicherung</td>
+                                <td>Ergebnisse in scores.json speichern</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag python"><i class="fab fa-python"></i>Python 3.8+</span></td>
+                                <td>Runtime</td>
+                                <td>Hauptprogrammiersprache des Servers</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <h3 style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
+                <h3
+                    style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
                     <i class="fas fa-sitemap"></i>
                     Server-Struktur:
                 </h3>
-                <div class="code-example">
-server.py<br>
-├── load_scores()      → JSON-Ergebnisse lesen<br>
-├── save_scores()      → Neue Ergebnisse speichern<br>
-│<br>
-└── Routes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├── GET  /          → HTML-Seite mit Rangliste<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├── GET  /game      → bug_hunter.html senden<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├── GET  /api/scores → Top-20 abrufen<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├── POST /api/scores → Neues Ergebnis hinzufügen<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── DELETE /api/scores → Alles löschen (nur Test)<br>
-                </div>
+                <div class="code-example">server.py
+├── load_scores() → JSON-Ergebnisse lesen
+├── save_scores() → Neue Ergebnisse speichern
+│
+└── Routes:
+    ├── GET / → HTML-Seite mit Rangliste
+    ├── GET /game → bug_hunter.html senden
+    ├── GET /api/scores → Top-20 abrufen
+    ├── POST /api/scores → Neues Ergebnis hinzufügen
+    └── DELETE /api/scores → Alles löschen (nur Test)</div>
             </div>
 
             <div class="section games" id="games">
@@ -1006,36 +1072,39 @@ server.py<br>
                     Zwei Spiel-Editionen
                 </h2>
 
-                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--secondary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
+                <h3
+                    style="margin-top: 2rem; margin-bottom: 1rem; color: var(--secondary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
                     <i class="fab fa-python"></i>
                     Python Edition (10 Level)
                 </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Typ</th>
-                            <th>Beschreibung</th>
-                            <th>Beispiele</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong><i class="fas fa-wrench" style="margin-right: 0.5rem;"></i>Fix (3 Level)</strong></td>
-                            <td>Syntaxfehler korrigieren</td>
-                            <td>Klammern hinzufügen, Fehler beheben, Einrückung korrigieren</td>
-                        </tr>
-                        <tr>
-                            <td><strong><i class="fas fa-search" style="margin-right: 0.5rem;"></i>Finde (4 Level)</strong></td>
-                            <td>Toten Code finden (ungenutzte Variablen)</td>
-                            <td>Welche Variable wird erstellt aber nicht verwendet?</td>
-                        </tr>
-                        <tr>
-                            <td><strong><i class="fas fa-list-ol" style="margin-right: 0.5rem;"></i>Ordne (3 Level)</strong></td>
-                            <td>Richtige Code-Reihenfolge wiederherstellen</td>
-                            <td>Funktion, Schleife oder Bedingung aus durcheinander geratenen Zeilen zusammensetzen</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Typ</th>
+                                <th>Beschreibung</th>
+                                <th>Beispiele</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong><i class="fas fa-wrench" style="margin-right: 0.5rem;"></i>Fix (3 Level)</strong></td>
+                                <td>Syntaxfehler korrigieren</td>
+                                <td>Klammern hinzufügen, Fehler beheben, Einrückung korrigieren</td>
+                            </tr>
+                            <tr>
+                                <td><strong><i class="fas fa-search" style="margin-right: 0.5rem;"></i>Finde (4 Level)</strong></td>
+                                <td>Toten Code finden (ungenutzte Variablen)</td>
+                                <td>Welche Variable wird erstellt aber nicht verwendet?</td>
+                            </tr>
+                            <tr>
+                                <td><strong><i class="fas fa-list-ol" style="margin-right: 0.5rem;"></i>Ordne (3 Level)</strong></td>
+                                <td>Richtige Code-Reihenfolge wiederherstellen</td>
+                                <td>Funktion, Schleife oder Bedingung aus durcheinander geratenen Zeilen zusammensetzen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="feature-grid" style="margin-top: 1.5rem;">
                     <div class="feature-card">
@@ -1062,36 +1131,39 @@ server.py<br>
                     </div>
                 </div>
 
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1rem; color: var(--secondary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
+                <h3
+                    style="margin-top: 2.5rem; margin-bottom: 1rem; color: var(--secondary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
                     <i class="fab fa-css3"></i>
                     CSS Edition (10 Level)
                 </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Level</th>
-                            <th>Thema</th>
-                            <th>Fähigkeiten</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>1–4 (Einfach)</strong></td>
-                            <td>Ameisen-Positionierung</td>
-                            <td>left:, right:, top:, bottom: Eigenschaften</td>
-                        </tr>
-                        <tr>
-                            <td><strong>5–7 (Mittel)</strong></td>
-                            <td>Größe, Farbe, Schatten</td>
-                            <td>width:, background:, box-shadow:, border-radius:</td>
-                        </tr>
-                        <tr>
-                            <td><strong>8–10 (Schwer)</strong></td>
-                            <td>Transformationen und Effekte</td>
-                            <td>transform: rotate/scale, opacity, BOSS-Level</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Thema</th>
+                                <th>Fähigkeiten</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1–4 (Einfach)</strong></td>
+                                <td>Ameisen-Positionierung</td>
+                                <td>left:, right:, top:, bottom: Eigenschaften</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5–7 (Mittel)</strong></td>
+                                <td>Größe, Farbe, Schatten</td>
+                                <td>width:, background:, box-shadow:, border-radius:</td>
+                            </tr>
+                            <tr>
+                                <td><strong>8–10 (Schwer)</strong></td>
+                                <td>Transformationen und Effekte</td>
+                                <td>transform: rotate/scale, opacity, BOSS-Level</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="feature-grid" style="margin-top: 1.5rem;">
                     <div class="feature-card">
@@ -1118,58 +1190,70 @@ server.py<br>
                     <i class="fas fa-sitemap"></i>
                     Systemarchitektur
                 </h2>
+
+                <div class="tech-info">
+                    <p>
+                        <i class="fas fa-download"></i>
+                        <strong>GET:</strong> Daten vom Server abrufen (z.B. Rangliste laden)
+                    </p>
+                    <p>
+                        <i class="fas fa-upload"></i>
+                        <strong>POST:</strong> Neue Daten zum Server senden (z.B. Spielergebnis speichern)
+                    </p>
+                    <p>
+                        <i class="fas fa-trash-alt"></i>
+                        <strong>DELETE:</strong> Daten vom Server löschen (nur für Tests)
+                    </p>
+                </div>
                 <div class="diagram">
-                    <div class="diagram-line">Browser (React 18 + Babel)</div>
-                    <div class="diagram-line">↓ Fetch API (JSON)</div>
-                    <div class="diagram-line">├─ POST /api/scores (neues Ergebnis)</div>
-                    <div class="diagram-line">├─ GET  /api/scores  (Rangliste abrufen)</div>
-                    <div class="diagram-line">└─ DELETE /api/scores (nur zum Testen)</div>
+                    <div class="diagram-line"><strong>Frontend (Browser):</strong> React 18 + Babel</div>
                     <div class="diagram-line">↓</div>
-                    <div class="diagram-line">Flask Server (Python)</div>
-                    <div class="diagram-line">├─ CORS Middleware (Cross-Domain-Anfragen erlauben)</div>
+                    <div class="diagram-line"><strong>Netzwerk-Anfragen (Fetch API):</strong></div>
+                    <div class="diagram-line">&nbsp;&nbsp;📥 GET /api/scores → Rangliste laden</div>
+                    <div class="diagram-line">&nbsp;&nbsp;📤 POST /api/scores → Spielergebnis senden</div>
+                    <div class="diagram-line">&nbsp;&nbsp;🗑️ DELETE /api/scores → Daten löschen (Test)</div>
+                    <div class="diagram-line">↓</div>
+                    <div class="diagram-line"><strong>Backend (Server):</strong> Flask + Python</div>
+                    <div class="diagram-line">├─ CORS Middleware (Sicherheit für Anfragen)</div>
                     <div class="diagram-line">│</div>
-                    <div class="diagram-line">└─ Routes:</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;├─ GET  /        → Ranglisten-HTML</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;├─ GET  /game    → bug_hunter.html (React App)</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;│</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;└─ REST API (/api/scores):</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ GET      → Top-20 Spieler</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ POST     → Ergebnis speichern</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{name, game, mode, score, percent, avg_time}</div>
-                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ DELETE   → scores.json löschen</div>
+                    <div class="diagram-line">└─ <strong>Routen (Seiten):</strong></div>
+                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;📄 GET / → Ranglisten-Seite</div>
+                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;🎮 GET /game → Spiel-Seite (React App)</div>
+                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;📊 GET /api/scores → Top-20 Ergebnisse</div>
+                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;💾 POST /api/scores → Neue Punkte speichern</div>
+                    <div class="diagram-line">&nbsp;&nbsp;&nbsp;&nbsp;🗑️ DELETE /api/scores → Alles löschen (nur Test)</div>
                     <div class="diagram-line">↓</div>
-                    <div class="diagram-line">scores.json</div>
-                    <div class="diagram-line">└─ JSON-Array aller Ergebnisse (Persistente Speicherung)</div>
+                    <div class="diagram-line"><strong>Datenbank:</strong> scores.json</div>
+                    <div class="diagram-line">└─ JSON-Datei mit allen Spielergebnissen</div>
                 </div>
 
-                <h3 style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
+                <h3
+                    style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
                     <i class="fas fa-exchange-alt"></i>
                     Datenfluss in React:
                 </h3>
-                <div class="code-example">
-App Component<br>
-&nbsp;&nbsp;├─ screen = 'menu' | 'python' | 'css' | 'leaderboard'<br>
-&nbsp;&nbsp;├─ playerName (String)<br>
-&nbsp;&nbsp;├─ timerMode (Boolean)<br>
-&nbsp;&nbsp;│<br>
-&nbsp;&nbsp;└─ handleStart({ game, name, timerMode })<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Wechselt Bildschirm<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Speichert playerName & timerMode<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ Übergibt an Spiel-Komponente<br>
-<br>
-PythonGame / CssGame<br>
-&nbsp;&nbsp;├─ currentLevel = 0..9<br>
-&nbsp;&nbsp;├─ score (akkumuliert)<br>
-&nbsp;&nbsp;├─ gameState = 'menu' | 'playing' | 'levelComplete' | 'completed'<br>
-&nbsp;&nbsp;├─ timeLeft (von TIMER_MAX bis 0)<br>
-&nbsp;&nbsp;├─ showStats = true (5 Sek => Endstatistik)<br>
-&nbsp;&nbsp;│<br>
-&nbsp;&nbsp;└─ Bei Spielende:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. POST /api/scores mit finalen Daten<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. rank & total abrufen (Platzierung)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. StatsOverlay 5 Sekunden anzeigen<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Zu 'completed' Bildschirm wechseln<br>
-                </div>
+                <div class="code-example">App Component
+  ├─ screen = 'menu' | 'python' | 'css' | 'leaderboard'
+  ├─ playerName (String)
+  ├─ timerMode (Boolean)
+  │
+  └─ handleStart({ game, name, timerMode })
+        ├─ Wechselt Bildschirm
+        ├─ Speichert playerName &amp; timerMode
+        └─ Übergibt an Spiel-Komponente
+
+PythonGame / CssGame
+  ├─ currentLevel = 0..9
+  ├─ score (akkumuliert)
+  ├─ gameState = 'menu' | 'playing' | 'levelComplete' | 'completed'
+  ├─ timeLeft (von TIMER_MAX bis 0)
+  ├─ showStats = true (5 Sek =&gt; Endstatistik)
+  │
+  └─ Bei Spielende:
+        1. POST /api/scores mit finalen Daten
+        2. rank &amp; total abrufen (Platzierung)
+        3. StatsOverlay 5 Sekunden anzeigen
+        4. Zu 'completed' Bildschirm wechseln</div>
             </div>
 
             <div class="section" id="api">
@@ -1183,7 +1267,8 @@ PythonGame / CssGame<br>
                     Top-20 Ergebnisse abrufen<br><br>
                     <code>curl http://localhost:5000/api/scores</code><br><br>
                     <strong>Antwort:</strong>
-                    <div style="background: #1f2937; color: #10b981; padding: 1rem; margin-top: 1rem; border-radius: 4px; font-size: 0.8rem;">
+                    <div
+                        style="background: #1f2937; color: #10b981; padding: 1rem; margin-top: 1rem; border-radius: 4px; font-size: 0.8rem; word-break: break-word; overflow-wrap: break-word;">
                         [<br>
                         &nbsp;&nbsp;{<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;"name": "Alice",<br>
@@ -1203,7 +1288,8 @@ PythonGame / CssGame<br>
                     Neues Ergebnis speichern und Platzierung abrufen<br><br>
                     <code>curl -X POST -H "Content-Type: application/json" -d '{"name":"Bob","game":"css","score":900}' http://localhost:5000/api/scores</code><br><br>
                     <strong>Request Body:</strong>
-                    <div style="background: #1f2937; color: #10b981; padding: 1rem; margin-top: 1rem; border-radius: 4px; font-size: 0.8rem;">
+                    <div
+                        style="background: #1f2937; color: #10b981; padding: 1rem; margin-top: 1rem; border-radius: 4px; font-size: 0.8rem; word-break: break-word; overflow-wrap: break-word;">
                         {<br>
                         &nbsp;&nbsp;"name": string (erforderlich),<br>
                         &nbsp;&nbsp;"game": "python" | "css",<br>
@@ -1299,25 +1385,24 @@ PythonGame / CssGame<br>
                     </div>
                 </div>
 
-                <h3 style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
+                <h3
+                    style="margin-top: 2rem; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 0.75rem;">
                     <i class="fas fa-play"></i>
                     Lokaler Start:
                 </h3>
-                <div class="code-example">
-# 1. Stelle sicher, dass Flask installiert ist:<br>
-pip install flask flask-cors<br>
-<br>
-# 2. Platziere Dateien in einem Ordner:<br>
-# - server.py<br>
-# - bug_hunter.html<br>
-<br>
-# 3. Starten Sie den Server:<br>
-python server.py<br>
-<br>
-# 4. Öffnen Sie im Browser:<br>
-# - Spiel:      http://localhost:5000/game<br>
-# - Rangliste:  http://localhost:5000/
-                </div>
+                <div class="code-example"># 1. Stelle sicher, dass Flask installiert ist:
+pip install flask flask-cors
+
+# 2. Platziere Dateien in einem Ordner:
+# - server.py
+# - bug_hunter.html
+
+# 3. Starten Sie den Server:
+python server.py
+
+# 4. Öffnen Sie im Browser:
+# - Spiel: http://localhost:5000/game
+# - Rangliste: http://localhost:5000/</div>
             </div>
 
             <div class="divider"></div>
